@@ -1,0 +1,10 @@
+const String angleOneToken ="Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VybmFtZSI6IkRJWUQzMTI1MCIsInJvbGVzIjowLCJ1c2VydHlwZSI6IlVTRVIiLCJ0b2tlbiI6ImV5SmhiR2NpT2lKSVV6VXhNaUlzSW5SNWNDSTZJa3BYVkNKOS5leUp6ZFdJaU9pSkVTVmxFTXpFeU5UQWlMQ0psZUhBaU9qRTJPVGczTXpVMU9ERXNJbWxoZENJNk1UWTVPRFkwTXpRd05Dd2lhblJwSWpvaVpERXpOR1JrTkRRdE16WTRNQzAwTWprMExUZ3haalF0WWpreFptUXhaVEF3TkdabElpd2liMjF1WlcxaGJtRm5aWEpwWkNJNk15d2ljMjkxY21ObGFXUWlPaUl6SWl3aWRYTmxjbDkwZVhCbElqb2lZMnhwWlc1MElpd2lkRzlyWlc1ZmRIbHdaU0k2SW5SeVlXUmxYMkZqWTJWemMxOTBiMnRsYmlJc0ltZHRYMmxrSWpvekxDSnpiM1Z5WTJVaU9pSXpJbjAuQmp5dUdEcW9RNXQtVTlrdUFDWjA4Y2hHTHNjWTB2eWdHWlJhWGlYdFdrdjI1NWdzVzdOLVg5akc3U0xFZnRIWkttazRCQjNUN3F1d3Z1X2tITGlJbFEiLCJBUEktS0VZIjoibWI3NnJUdmciLCJpYXQiOjE2OTg2NDM0NjQsImV4cCI6MTY5ODczNTU4MX0.pshFQbxJS8za40bRJ14UpL7Rx-AtNqmlcfLM0oL7UNaoVBEeXMVt_WXv63KHYcOZn8Yc-3X5H7mTmAFtNtuOLQ";
+const String baseUrl = "https://zaveritrading.com/";
+const String imgUrl = "${baseUrl}public/storage/image/";
+const String signUpUrl = "${baseUrl}api/user/signup";
+const String loginUrl = "${baseUrl}api/user/login";
+const String updateDetailsUrl = "${baseUrl}api/user/update/";
+const String searchStockUrl = "${baseUrl}api/user/stock_filter";
+const String wishListUrl = "${baseUrl}api/user/wishlist/";
+const String portfolioUrl = "${baseUrl}api/user/portfolio-list/";
+const String topStockUrl = "${baseUrl}api/user/topstocks";

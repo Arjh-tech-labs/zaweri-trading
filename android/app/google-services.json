@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "534710577527",
+    "project_id": "zaveri-78417",
+    "storage_bucket": "zaveri-78417.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534710577527:android:ceb2df0aaa8f6e8d059972",
+        "android_client_info": {
+          "package_name": "com.arjhtechlabs.zaveri"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-4amgA0aWk0lsJA8UaqcGeYDe_7S9JcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
