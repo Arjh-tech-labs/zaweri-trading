@@ -276,10 +276,12 @@ class _LoginState extends State<Login> {
         Map<String, dynamic> data = jsonResponse['data'];
         int userid = data['id'];
         String accessToken = data['access_token'];
+        String name = data['f_name'];
 
         final prefs = await SharedPreferences.getInstance();
         prefs.setInt('userid', userid);
         prefs.setString('barrierToken', accessToken);
+        prefs.setString('f_name', name);
         print(userid);
         Get.offAll(BottomNavBar());
         setState(() {});

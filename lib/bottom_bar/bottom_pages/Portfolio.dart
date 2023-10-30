@@ -5,9 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:Zaveri/Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart';
 import 'package:Zaveri/Custom_BlocObserver/notifire_clor.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import '../../Custom_BlocObserver/Custtom_app_bar/newCustom_appBar.dart';
+import '../../Custom_BlocObserver/Custtom_stoc/Custtom_stoc.dart';
 import '../../Custom_BlocObserver/custtom_slock_list/custtom_slock_list.dart';
+import '../../stocks/controller/hist_controller.dart';
+import '../../stocks/controller/stock_details_controller.dart';
 import '../../utils/medeiaqury/medeiaqury.dart';
 import '../Stock_Detail.dart';
+import '../controller/portfolio_controller.dart';
 
 class Portfolio extends StatefulWidget {
   const Portfolio({Key? key}) : super(key: key);
@@ -19,6 +24,10 @@ class Portfolio extends StatefulWidget {
 class _PortfolioState extends State<Portfolio> {
   late ColorNotifier notifier;
 
+  final PortfolioController portfolioController = Get.find();
+  final StockController stockController = Get.find();
+  final HistController histController = Get.put(HistController());
+
   // late List<GDPData> _chartData;
   // late TooltipBehavior _tooltipBehavior;
 
@@ -26,6 +35,7 @@ class _PortfolioState extends State<Portfolio> {
   void initState() {
     // _chartData = getChartData();
     // _tooltipBehavior = TooltipBehavior(enable: true);
+    portfolioController.portfolioApi();
     super.initState();
   }
 
@@ -47,156 +57,116 @@ class _PortfolioState extends State<Portfolio> {
       builder:  (_,child) {
         return Scaffold(
           backgroundColor: notifier.getwihitecolor,
-          appBar: CustomAppBar(
+          appBar: NewCustomAppBar(
               notifier.getwihitecolor, "Portfolio", notifier.getblck,
               height: height / 15),
           body: Column(
             children: [
-              SizedBox(height: height / 40),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(const Stock_Detail());
-                    },
-                    child: up_down_rate("assets/images/Today_Gains.png",
-                        "\₹2,209", "Today Gains"),
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(const Stock_Detail());
-                    },
-                    child: up_down_rate("assets/images/Overall Loss.png",
-                        "\₹5,440", "Overall Loss"),
-                  ),
-                  SizedBox(width: width / 15),
-                ],
-              ),
-              SizedBox(height: height / 25),
-              Row(
-                children: [
-                  SizedBox(width: width / 20),
-                  Text(
-                    "Portfolio Balance",
-                    style: TextStyle(
-                        fontSize: 14.sp,
-                        color: notifier.getgrey,
-                        fontFamily: 'Gilroy_Medium'),
-                  ),
-                  const Spacer(),
-                  Image.asset("assets/images/ball.png", height: height / 20),
-                  SizedBox(width: width / 15),
-                ],
-              ),
-              SizedBox(height: height / 200),
-              Row(
-                children: [
-                  SizedBox(width: width / 20),
-                  Text(
-                    "\₹97,326.46",
-                    style: TextStyle(
-                        color: notifier.getblck,
-                        fontFamily: 'Gilroy_Bold',
-                        fontSize: 27.sp),
-                  ),
-                ],
-              ),
-              SizedBox(height: height / 200),
-              Row(
-                children: [
-                  SizedBox(width: width / 25),
-                  const Icon(
-                    Icons.arrow_drop_up_outlined,
-                    color: Color(0xff19C09A),
-                  ),
-                  Text(
-                    "65.63 (76,23%)",
-                    style: TextStyle(
-                        color: const Color(0xff19C09A),
-                        fontSize: 12.sp,
-                        fontFamily: 'Gilroy_Bold'),
-                  ),
-                  SizedBox(width: width / 100),
-                  Text(
-                    "Today",
-                    style: TextStyle(
-                        color: notifier.getgrey,
-                        fontSize: 12.sp,
-                        fontFamily: 'Gilroy_Bold'),
-                  ),
-                ],
-              ),
+              // SizedBox(height: height / 40),
+              // Row(
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () {
+              //         Get.to(const Stock_Detail());
+              //       },
+              //       child: up_down_rate("assets/images/Today_Gains.png",
+              //           "\₹2,209", "Today Gains"),
+              //     ),
+              //     const Spacer(),
+              //     GestureDetector(
+              //       onTap: () {
+              //         Get.to(const Stock_Detail());
+              //       },
+              //       child: up_down_rate("assets/images/Overall Loss.png",
+              //           "\₹5,440", "Overall Loss"),
+              //     ),
+              //     SizedBox(width: width / 15),
+              //   ],
+              // ),
+              // SizedBox(height: height / 25),
+              // Row(
+              //   children: [
+              //     SizedBox(width: width / 20),
+              //     Text(
+              //       "Portfolio Balance",
+              //       style: TextStyle(
+              //           fontSize: 14.sp,
+              //           color: notifier.getgrey,
+              //           fontFamily: 'Gilroy_Medium'),
+              //     ),
+              //     const Spacer(),
+              //     Image.asset("assets/images/ball.png", height: height / 20),
+              //     SizedBox(width: width / 15),
+              //   ],
+              // ),
+              // SizedBox(height: height / 200),
+              // Row(
+              //   children: [
+              //     SizedBox(width: width / 20),
+              //     Text(
+              //       "\₹97,326.46",
+              //       style: TextStyle(
+              //           color: notifier.getblck,
+              //           fontFamily: 'Gilroy_Bold',
+              //           fontSize: 27.sp),
+              //     ),
+              //   ],
+              // ),
+              // SizedBox(height: height / 200),
+              // Row(
+              //   children: [
+              //     SizedBox(width: width / 25),
+              //     const Icon(
+              //       Icons.arrow_drop_up_outlined,
+              //       color: Color(0xff19C09A),
+              //     ),
+              //     Text(
+              //       "65.63 (76,23%)",
+              //       style: TextStyle(
+              //           color: const Color(0xff19C09A),
+              //           fontSize: 12.sp,
+              //           fontFamily: 'Gilroy_Bold'),
+              //     ),
+              //     SizedBox(width: width / 100),
+              //     Text(
+              //       "Today",
+              //       style: TextStyle(
+              //           color: notifier.getgrey,
+              //           fontSize: 12.sp,
+              //           fontFamily: 'Gilroy_Bold'),
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: height / 50),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 1,
+                child: ListView.separated(
+                  itemCount: portfolioController.portfolioStock.length,
                   itemBuilder: (context, index) {
+                    final portfolio =
+                    portfolioController.portfolioStock[index];
+                    final sendExchange = portfolio['exchange'].toString();
+                    final sendToken = portfolio['symbolToken'].toString();
                     return Column(
                       children: [
-                        column_chart(),
-                        SizedBox(height: height / 80),
-                        Row(
-                          children: [
-                            SizedBox(width: width / 20),
-                            Text(
-                              "List Stocks",
-                              style: TextStyle(
-                                  color: notifier.getblck,
-                                  fontSize: 18.sp,
-                                  fontFamily: 'Gilroy_Bold'),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height / 30),
                         GestureDetector(
                           onTap: () {
-                            Get.to(const Stock_Detail());
+                            stockController.calEverySec(
+                                exchange: sendExchange, token: sendToken);
+                            histController.histData(
+                                exchange: sendExchange, token: sendToken);
+                            Get.to(Stock_Detail());
                           },
                           child: custtom_button(
-                              "Kotak Bank", "Kotak PVL.", "\₹326,23", "2,87%"),
+                              "${portfolio['tradingSymbol']}", "${portfolio['exchange']}", "\₹${portfolio['ltp']}", "${portfolio['percentChange']}%"),
                         ),
-                        SizedBox(height: height / 30),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(const Stock_Detail());
-                          },
-                          child: custtom_button(
-                              "HDFC bank", "HDFC Inc.", "\₹252,12", "10.03%"),
-                        ),
-                        SizedBox(height: height / 30),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(const Stock_Detail());
-                          },
-                          child: custtom_button(
-                              "Ambuja Cement", "Ambuja", "\₹360,23", "10.03%"),
-                        ),
-                        SizedBox(height: height / 30),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(const Stock_Detail());
-                          },
-                          child: custtom_button(
-                              "Airtel bharti", "Airtel", "\₹326,23", "2,87%"),
-                        ),
-                        SizedBox(height: height / 30),
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(const Stock_Detail());
-                          },
-                          child: custtom_button(
-                              "icici lombard gen.",
-                              "icici",
-                              "\₹360,23",
-                              "10,03%"),
-                        ),
-                        SizedBox(height: height / 30),
                       ],
                     );
-                  },
+                  }, separatorBuilder: (BuildContext context, int index) {
+                    return Divider( thickness: 0.5,);
+                },
                 ),
-              )
+              ),
+
             ],
           ),
         );

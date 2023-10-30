@@ -6,6 +6,7 @@ import 'package:Zaveri/Custom_BlocObserver/Custtom_stoc/Custtom_stoc.dart';
 import 'package:Zaveri/Custom_BlocObserver/Stock%20Gains%20card/Stock_Gains_card.dart';
 import 'package:Zaveri/Custom_BlocObserver/custtom_slock_list/custtom_slock_list.dart';
 import 'package:Zaveri/Custom_BlocObserver/notifire_clor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../stocks/controller/hist_controller.dart';
 import '../../stocks/controller/stock_details_controller.dart';
 import '../../stocks/views/stock_search.dart';
@@ -34,12 +35,20 @@ class _HomeState extends State<Home> {
   late ColorNotifier notifier;
 
   int touchedIndex = -1;
+  String name='';
   @override
-  void initState() {
+  void initState(){
     super.initState();
     wishlistsController.favoriteApi();
     portfolioController.portfolioApi();
     topStockController.callTopStockApi();
+    sharePref();
+  }
+
+  sharePref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int userid = prefs.getInt('userid')!;
+    name = prefs.getString('f_name')!;
   }
 
   @override
@@ -61,7 +70,7 @@ class _HomeState extends State<Home> {
                 children: [
                   SizedBox(height: height / 70),
                   Text(
-                    "Hello User",
+                    "Hello $name",
                     style: TextStyle(
                         fontSize: 15.sp,
                         color: notifier.getgrey,
@@ -77,15 +86,22 @@ class _HomeState extends State<Home> {
                 ],
               ),
               actions: [
-                IconButton(
-                  onPressed: () {
-                    Get.to(StockListing());
-                  },
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.blue,
-                    size: 30,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(20)),
+                        color: Colors.black12,
+                      ),
+                      child: IconButton(onPressed: (){
+                        Get.to(StockListing());
+                      }, icon: Image.asset("assets/images/search.png",color: Colors.blueAccent,height: 30,)),
+                    ),
+                    SizedBox(width: width / 25),
+                  ],
                 )
               ],
             )),
