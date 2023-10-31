@@ -5,6 +5,7 @@ import 'package:Zaveri/Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart'
 import 'package:Zaveri/bottom_bar/bottom_pages/stock_exchange_tabs/buy.dart';
 import 'package:Zaveri/bottom_bar/bottom_pages/stock_exchange_tabs/sell.dart';
 
+import '../../Custom_BlocObserver/Custtom_app_bar/newCustom_appBar.dart';
 import '../../Custom_BlocObserver/notifire_clor.dart';
 import '../../utils/medeiaqury/medeiaqury.dart';
 
@@ -56,7 +57,7 @@ class _Stock_ExchangeState extends State<Stock_Exchange>
       builder:  (_,child) {
         return Scaffold(
           backgroundColor: notifier.getwihitecolor,
-          appBar: CustomAppBar(
+          appBar: NewCustomAppBar(
               notifier.getwihitecolor, "Exchange", notifier.getblck,
               height: height / 15),
           body: SingleChildScrollView(

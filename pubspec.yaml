@@ -83,6 +83,7 @@ dependencies:
   shared_preferences:
 #  app version info
   package_info:
+  url_launcher:
 
 
 dev_dependencies:
