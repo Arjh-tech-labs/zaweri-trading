@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../bottom_bar/Stock_Detail.dart';
+import '../apis/add_fav.dart';
 import '../controller/hist_controller.dart';
 import '../controller/stock_details_controller.dart';
 import '../controller/stock_search_controller.dart';
@@ -14,7 +15,10 @@ class StockListing extends StatefulWidget {
 }
 
 class _StockListingState extends State<StockListing> {
-  final StockSearchController stockSearchController = Get.put(StockSearchController());
+
+  final TextEditingController searchName = TextEditingController();
+  final StockSearchController stockSearchController =
+      Get.put(StockSearchController());
   final StockController stockController = Get.find();
   final HistController histController = Get.find();
   @override
@@ -49,11 +53,12 @@ class _StockListingState extends State<StockListing> {
           height: 45.h,
           // width: 300.w,
           child: TextField(
+            controller: searchName,
             style: TextStyle(color: Colors.blue),
             onChanged: (value) {
               name = value;
             },
-            onEditingComplete: (){
+            onEditingComplete: () {
               FocusScope.of(context).unfocus();
               stockSearchController.fetchFilteredStocks(filter: name);
             },
@@ -100,24 +105,40 @@ class _StockListingState extends State<StockListing> {
                 itemCount: stockSearchController
                     .fetchedStock.length, // Number of items in the list
                 itemBuilder: (BuildContext context, int index) {
-                  // Build and return the item at the specified index
+                  final stock = stockSearchController.fetchedStock[index];
+                  final stockName = stock['name'].toString();
+                  final stockExg = stock['exch_seg'].toString();
+                  final stockToken = stock['token'].toString();
+                  final wishlistStatus = stock['wishlists_status'];
                   return ListTile(
                     onTap: () {
-                      stockController.calEverySec(exchange: stockSearchController.fetchedStock[index]['exch_seg'].toString(),
-                          token: stockSearchController.fetchedStock[index]['token'].toString());
-                      histController.histData(exchange: stockSearchController.fetchedStock[index]['exch_seg'].toString(),
-                          token: stockSearchController.fetchedStock[index]['token'].toString());
+                      stockController.calEverySec(
+                          exchange: stockExg, token: stockToken);
+                      histController.histData(
+                          exchange: stockExg, token: stockToken);
                       Get.to(Stock_Detail());
                     },
                     leading: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(Icons.search),
                     ),
-                    title: Text(stockSearchController.fetchedStock[index]
-                        ['name']), // Replace with your item content
-                    subtitle: Text(
-                        stockSearchController.fetchedStock[index]['exch_seg']),
-                    trailing: Icon(Icons.bookmark_border),
+                    title: Text(stockName), // Replace with your item content
+                    subtitle: Text(stockExg),
+                    trailing: IconButton(
+                        onPressed: () {
+                          AddFav(
+                            stockSymbol: stockToken,
+                            stockToken: stockToken,
+                            marketType: stockExg,
+                            filterName: searchName.text
+                          );
+                        },
+                        icon: wishlistStatus == 0
+                            ? Icon(Icons.bookmark_border)
+                            : Icon(
+                                Icons.bookmark_added,
+                                color: Colors.blue,
+                              )),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {

@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:Zaveri/bottom_bar/bottom_pages/screens/view_all_watchlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -180,6 +183,7 @@ class _HomeState extends State<Home> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Watchlist",
@@ -188,6 +192,18 @@ class _HomeState extends State<Home> {
                           fontSize: 18.sp,
                           fontFamily: 'Gilroy_Bold'),
                     ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(AllWatchList());
+                      },
+                      child: Text(
+                        "View all",
+                        style: TextStyle(
+                            color: notifier.getbluecolor,
+                            fontSize: 15.sp,
+                            fontFamily: 'Gilroy_Medium'),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -195,7 +211,7 @@ class _HomeState extends State<Home> {
                 return ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: surajController.suraj.length,
+                  itemCount: min(surajController.suraj.length, 5),
                   itemBuilder: (context, index) {
                     final stock = surajController.suraj[index];
                     final sendExchange = stock['exchange'].toString();
