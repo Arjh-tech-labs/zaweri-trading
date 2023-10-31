@@ -8,6 +8,8 @@ import 'package:Zaveri/bottom_bar/bottom_pages/Stock_Exchange.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../Controller/order_controller.dart';
+import '../Controller/wallet_controller.dart';
 import '../screens/profile/controller/profile_controller.dart';
 import '../stocks/controller/hist_controller.dart';
 import '../stocks/controller/stock_details_controller.dart';
@@ -32,6 +34,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final PortfolioController portfolioController = Get.put(PortfolioController());
   final TopStockController topStockController  = Get.put(TopStockController());
   final SurajController surajController = Get.put(SurajController());
+  final WalletController walletController = Get.put(WalletController());
+  final OrderController orderController = Get.put(OrderController());
+
+
 
 
 
@@ -41,6 +47,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     super.initState();
     _selectedIndex = widget.currentIndex ?? 0;
+    profileController.UserUpdateAPI();
+    walletController.WalletAPI();
   }
 
   bool isPressed = false;

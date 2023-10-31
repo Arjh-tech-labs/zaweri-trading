@@ -1,22 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dio/dio.dart';
-import 'package:dio/src/form_data.dart' as dioFormData;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:Zaveri/Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart';
-import 'package:Zaveri/Custom_BlocObserver/button/custtom_button.dart';
-import 'package:Zaveri/Custom_BlocObserver/notifire_clor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../bottom_bar/bottom_pages/Profile.dart';
+import 'package:http/http.dart' as http;
+import '../../Controller/wallet_controller.dart';
+import '../../Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart';
+import '../../Custom_BlocObserver/button/custtom_button.dart';
+import '../../Custom_BlocObserver/notifire_clor.dart';
 import '../../utils/medeiaqury/medeiaqury.dart';
+import 'controller/profile_controller.dart';
 
 class MyAccount extends StatefulWidget {
   const MyAccount({Key? key}) : super(key: key);
@@ -26,15 +26,15 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
+
+  final ProfileController profileController = Get.find();
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
 
-  // bool hidePassword = true;
   late ColorNotifier notifier;
   String ImageUrl = "https://zaveritrading.com/public/storage/image/";
-  String img = "";
-  bool loading = true;
+  bool loading = false;
   int ImgStatus = 1;
   File? _imageFile;
   late SharedPreferences prefs;
@@ -49,35 +49,25 @@ class _MyAccountState extends State<MyAccount> {
     }
   }
 
-
-  SharePref()async{
-    prefs = await SharedPreferences.getInstance();
-  }
-
   Future<String?> getPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int userid = prefs.getInt('userid')!;
     String token = prefs.getString('barrierToken')!;
     ProfileAPI(userid, token);
-    SharePref();
   }
 
-  Future<String?> getPreference1() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    int userid = prefs.getInt('userid')!;
-    String token = prefs.getString('barrierToken')!;
-    ProfileAPI1(userid, token);
-    SharePref();
-  }
 
   @override
   void initState() {
     super.initState();
     getPreference();
-    getPreference1();
     getdarkmodepreviousstate();
+    profileController.UserUpdateAPI();
+    ImgStatus =profileController.ImgStatus;
     image();
-    // loading = !loading;
+    nameController.text=profileController.fetchData['f_name'];
+    emailController.text=profileController.fetchData['email'];
+    mobileController.text=profileController.fetchData['phone'].toString();
   }
 
   Future<void> _pickImage() async {
@@ -97,17 +87,18 @@ class _MyAccountState extends State<MyAccount> {
       return Image.asset("assets/images/profile.png", height: height / 6);
     } else if (ImgStatus == 2) {
       return ClipOval(
-          child: CachedNetworkImage(
-            imageUrl: ImageUrl + img,height: height / 6, width: width / 3,
-            fit: BoxFit.cover,
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          ),
+        child: CachedNetworkImage(
+          imageUrl: "$ImageUrl${profileController.fetchData['image']}",height: height / 6, width: width / 3,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
       );
     } else if (ImgStatus == 4) {
       return ClipOval(
           child: Image.file(_imageFile!,
-              height: height / 6, width: width / 3, fit: BoxFit.cover));
+              height: height / 6, width: width / 3, fit: BoxFit.cover)
+      );
     }
   }
 
@@ -132,7 +123,7 @@ class _MyAccountState extends State<MyAccount> {
                   image(),
                   Padding(
                     padding:
-                        EdgeInsets.only(top: height / 8.9, left: width / 4.8),
+                    EdgeInsets.only(top: height / 8.9, left: width / 4.8),
                     child: InkWell(
                       onTap: () {
                         _pickImage();
@@ -242,7 +233,6 @@ class _MyAccountState extends State<MyAccount> {
             GestureDetector(
                 onTap: () {
                   getPreference();
-                  SharePref();
                   setState(() {
                     loading = true;
                   });
@@ -255,116 +245,31 @@ class _MyAccountState extends State<MyAccount> {
   }
 
   ProfileAPI(int userid, String token) async {
-    var headers = {'Authorization': token};
-    dioFormData.FormData formData = dioFormData.FormData.fromMap({
-      'user_id': userid,
-      'image': [
-        await MultipartFile.fromFile(_imageFile!.path,
-            filename: _imageFile!.path)
-      ]
-    });
-    var dio = Dio();
-    var response = await dio.request(
-      'https://zaveritrading.com/api/user/update/$userid',
-      options: Options(
-        method: 'POST',
-        headers: headers,
-      ),
-      data: formData,
-    );
+    var headers = {
+      'Authorization': 'Bearer $token'
+    };
+    var request = http.MultipartRequest('POST', Uri.parse('https://zaveritrading.com/api/user/update/$userid'));
+    request.files.add(await http.MultipartFile.fromPath('image', _imageFile!.path));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+
     if (response.statusCode == 200) {
       setState(() {
         loading = false;
       });
-      String responseString = jsonEncode(response.data);
-      Map<String, dynamic> jsonResponse = json.decode(responseString);
-      int status = jsonResponse['status'];
-      if (status == 1) {
-        Fluttertoast.showToast(
-          msg: 'Data Saved Successfully',
-          backgroundColor: Colors.black,
-        );
-        Map<String, dynamic> data = jsonResponse['data'];
-        String email = data['email'];
-        String f_name = data['f_name'];
-        String phone = data['phone'].toString();
-        String image = data['image'];
-        prefs.setString('f_name', f_name);
-        prefs.setString('email', email);
-        prefs.setString('image', image);
-
-        setState(() {
-          emailController.text = email;
-          nameController.text = f_name;
-          mobileController.text = phone;
-        });
-        Get.off(Profile());
-
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Image type .jpg , .png ,',
-          backgroundColor: Colors.black,
-        );
-        setState(() {
-          loading = false;
-        });
-      }
-    } else {
+      Fluttertoast.showToast(
+        msg: 'Image Update Successfully',
+        backgroundColor: Colors.black,
+      );
+      Get.back();
     }
-  }
-
-  ProfileAPI1(int userid, String token) async {
-    var headers = {'Authorization': token};
-    dioFormData.FormData formData = dioFormData.FormData.fromMap({
-      'user_id': userid,
-    });
-    var dio = Dio();
-    var response = await dio.request(
-      'https://zaveritrading.com/api/user/update/$userid',
-      options: Options(
-        method: 'POST',
-        headers: headers,
-      ),
-      data: formData,
-    );
-    if (response.statusCode == 200) {
+    else {
       setState(() {
         loading = false;
       });
-      String responseString = jsonEncode(response.data);
-      Map<String, dynamic> jsonResponse = json.decode(responseString);
-      int status = jsonResponse['status'];
-      if (status == 1) {
-        Fluttertoast.showToast(
-          msg: 'Fetched data Successfully',
-          backgroundColor: Colors.black,
-        );
-        Map<String, dynamic> data = jsonResponse['data'];
-        String email = data['email'];
-        String f_name = data['f_name'];
-        String img1 = data['image'];
-        String phone = data['phone'].toString();
-        prefs.setString('f_name', f_name);
-        prefs.setString('email', email);
-        prefs.setString('image', img1);
-        setState(() {
-          emailController.text = email;
-          nameController.text = f_name;
-          mobileController.text = phone;
-          img = img1;
-          ImgStatus = 2;
-        });
-      } else {
-        setState(() {
-          loading = false;
-        });
-        Fluttertoast.showToast(
-          msg: 'server error',
-          backgroundColor: Colors.black,
-        );
-      }
-    } else {
-
+      print(response.reasonPhrase);
     }
+
   }
 }
+

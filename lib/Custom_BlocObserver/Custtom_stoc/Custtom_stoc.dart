@@ -48,7 +48,7 @@ class _Custtom_stocState extends State<Custtom_stoc> {
       return Container(
         // height: height / 5,
         width: width / 2.1,
-        margin: EdgeInsets.symmetric(horizontal: 8,vertical: 8),
+        margin: EdgeInsets.symmetric(horizontal: 8,vertical: 5),
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
             // color: notifier.getwihitecolor,

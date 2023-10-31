@@ -42,10 +42,12 @@ class SignUpApiController extends GetxController {
         Map<String, dynamic> data = jsonResponse['data'];
         int userid = data['id'];
         String accessToken = data['access_token'];
+        String name = data['f_name'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         // Set multiple key-value pairs
         await prefs.setInt('userid', userid);
         await prefs.setString('access_token', accessToken);
+        await prefs.setString('f_name', name);
         Get.offAll(BottomNavBar());
         update();
       } else {
