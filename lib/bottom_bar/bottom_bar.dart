@@ -39,8 +39,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
 
 
-
-
   int _selectedIndex = 0;
   ColorNotifier? notifire;
   @override

@@ -53,7 +53,7 @@ class _buttonState extends State<button> {
             print(constraints);
             return Container(
               height: height / 15,
-              width: width / 1.1,
+              width: width / 1.15,
               decoration: BoxDecoration(
                 color: widget.colorbutton!,
                 borderRadius: borderRadius,

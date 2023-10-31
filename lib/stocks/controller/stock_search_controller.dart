@@ -1,17 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../const/api_string.dart';
 
-class StockSearchController extends GetxController{
+class StockSearchController extends GetxController {
   RxList fetchedStock = [].obs;
 
   Future<void> fetchFilteredStocks({String? filter}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int userid = prefs.getInt('userid')!;
+    String token = prefs.getString('barrierToken')!;
+
     final response = await http.post(
       Uri.parse(searchStockUrl), // Replace with your API endpoint
-      body: {'search': filter}, // Send your filter criteria in the request body
+      body: {'search': filter,'user_id': "$userid"}, // Send your filter criteria in the request body
     );
 
     var data = jsonDecode(response.body);
@@ -23,5 +28,4 @@ class StockSearchController extends GetxController{
       throw Exception('Failed to load filtered stocks');
     }
   }
-
 }
