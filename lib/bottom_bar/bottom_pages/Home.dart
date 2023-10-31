@@ -17,6 +17,7 @@ import '../controller/portfolio_controller.dart';
 import '../controller/top_stock_controller.dart';
 import '../models/WishlistModel.dart';
 
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -50,6 +51,7 @@ class _HomeState extends State<Home> {
     int userid = prefs.getInt('userid')!;
     name = prefs.getString('f_name')!;
   }
+
 
   @override
   Widget build(BuildContext context) {

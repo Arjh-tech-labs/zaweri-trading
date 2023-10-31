@@ -1,4 +1,6 @@
+import 'package:Zaveri/firebase/firebaseclass.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -10,18 +12,38 @@ import 'Custom_BlocObserver/notifire_clor.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseApi().initFunction();
   await GetStorage.init();
   runApp(App());
-  // BlocOverrides.runZoned(
-  //   () => runApp(App()),
-  //   blocObserver: AppBlocObserver(),
-  // );
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   App({Key? key}) : super(key: key);
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
   final localizationController = Get.put(LocalizationController());
+
+
+  @override
+  void initState() {
+    super.initState();
+    setUpNotification();
+
+
+  }
+
+
+  setUpNotification() async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    print('FCM Token: $token');
+
+  }
 
   @override
   Widget build(BuildContext context) {

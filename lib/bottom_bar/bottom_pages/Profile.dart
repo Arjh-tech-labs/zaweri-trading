@@ -10,6 +10,7 @@ import 'package:Zaveri/screens/profile/FAQ.dart';
 import 'package:Zaveri/screens/profile/Message%20Support.dart';
 import 'package:Zaveri/screens/profile/My%20Account.dart';
 import 'package:Zaveri/screens/profile/Settings.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import '../../Controller/wallet_controller.dart';
 import '../../Custom_BlocObserver/Custtom_app_bar/newCustom_appBar.dart';
@@ -36,7 +37,6 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    // getPreference();
     // profileController.UserUpdateAPI();
     walletController.WalletAPI();
   }

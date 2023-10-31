@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Zaveri/Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart';
@@ -20,6 +21,8 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   late ColorNotifier notifier;
   bool value = false;
+  String?  appName = '';
+  String? appVersion = '';
 
   getdarkmodepreviousstate() async {
     final prefs = await SharedPreferences.getInstance();
@@ -39,6 +42,13 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     getdarkmodepreviousstate();
+    versionInfo();
+  }
+
+  versionInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    appVersion = packageInfo.version;
+    appName = packageInfo.appName;
   }
 
   @override
@@ -89,35 +99,35 @@ class _SettingsState extends State<Settings> {
                     },
                     child: setting_option("Contact Us")),
                 SizedBox(height: height / 18),
-                Row(
-                  children: [
-                    SizedBox(width: width / 20),
-                    Text(
-                      "Security",
-                      style: TextStyle(
-                          color: notifier.getgrey,
-                          fontFamily: 'Gilroy_Medium',
-                          fontSize: 15.sp),
-                    ),
-                  ],
-                ),
-                SizedBox(height: height / 23),
-                finger_print_and_face_id(),
-                SizedBox(height: height / 23),
+                // Row(
+                //   children: [
+                //     SizedBox(width: width / 20),
+                //     Text(
+                //       "Security",
+                //       style: TextStyle(
+                //           color: notifier.getgrey,
+                //           fontFamily: 'Gilroy_Medium',
+                //           fontSize: 15.sp),
+                //     ),
+                //   ],
+                // ),
+                // SizedBox(height: height / 23),
+                // finger_print_and_face_id(),
+                // SizedBox(height: height / 23),
                 Dark_mode(),
                 SizedBox(height: height / 20),
-                GestureDetector(
-                    onTap: () {
-                      Get.to(Pages("Privacy Policy"));
-                    },
-                    child: setting_polecy()),
-                SizedBox(height: height / 20),
-                GestureDetector(
-                    onTap: () {
-                      Get.to(Pages("Legal"));
-                    },
-                    child: setting_option("Legal")),
-                SizedBox(height: height / 25),
+                // GestureDetector(
+                //     onTap: () {
+                //       Get.to(Pages("Privacy Policy"));
+                //     },
+                //     child: setting_polecy()),
+                // SizedBox(height: height / 20),
+                // GestureDetector(
+                //     onTap: () {
+                //       Get.to(Pages("Legal"));
+                //     },
+                //     child: setting_option("Legal")),
+                // SizedBox(height: height / 25),
                 GestureDetector(
                   onTap: () {
                     clearSpecificSharedPreferences();
@@ -136,7 +146,7 @@ class _SettingsState extends State<Settings> {
                 SizedBox(height: height / 80),
                 Center(
                   child: Text(
-                    "© 2022 Zaveri Trading version 1.0",
+                    "© 2022 $appName version $appVersion",
                     style: TextStyle(
                         color: notifier.getgrey,
                         fontSize: 14.sp,

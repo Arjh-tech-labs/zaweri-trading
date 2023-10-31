@@ -70,14 +70,19 @@ dependencies:
 
 # graph
   chart_sparkline: ^1.0.14
-
   flutter_easyloading: ^3.0.5
-  firebase_core: ^2.17.0
 #  firebase database
   cloud_firestore: ^4.9.3
   firebase_auth: ^4.10.1
+  firebase_core: ^2.17.0
+  firebase_messaging:
+  flutter_local_notifications: ^16.1.0
+  awesome_notifications:
+
 #  local db
   shared_preferences:
+#  app version info
+  package_info:
 
 
 dev_dependencies:
