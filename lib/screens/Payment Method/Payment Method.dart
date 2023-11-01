@@ -153,7 +153,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 SizedBox(height: height / 20),
                 GestureDetector(
                   onTap: () {
-                    Get.to(const ConfirmOrder());
+                    Get.to( ConfirmOrder(amount:"300"));
                   },
                   child: button(
                       "Continue", notifier.getbluecolor,

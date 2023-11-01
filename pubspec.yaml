@@ -83,7 +83,10 @@ dependencies:
   shared_preferences:
 #  app version info
   package_info:
+# url launcher  like whatsapp
   url_launcher:
+# popup
+  rflutter_alert: ^2.0.7
 
 
 dev_dependencies:

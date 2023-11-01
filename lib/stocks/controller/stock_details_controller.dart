@@ -52,7 +52,7 @@ class StockController extends GetxController{
       if (response.statusCode == 200) {
         fetchedStock.value = data['data']['fetched'];
         update();
-        print(fetchedStock);
+        // print(fetchedStock);
         // print("Response data: ${data}");
         // print("Authorized POST request successful");
       } else {

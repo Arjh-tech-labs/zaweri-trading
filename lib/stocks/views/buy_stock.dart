@@ -20,7 +20,7 @@ class NewBuyStock extends StatefulWidget {
 class _NewBuyStockState extends State<NewBuyStock> {
   late ColorNotifier notifier;
   TextEditingController amountController = TextEditingController();
-  String amount = '0';
+  late final String amount ;
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifier>(context, listen: true);
@@ -66,7 +66,7 @@ class _NewBuyStockState extends State<NewBuyStock> {
               SizedBox(height: height / 20),
               GestureDetector(
                 onTap: () {
-                  Get.to(const ConfirmOrder());
+                  // Get.to(const ConfirmOrder());
                 },
                 child: payment_type(
                     "assets/images/debit_card.png",
@@ -80,7 +80,7 @@ class _NewBuyStockState extends State<NewBuyStock> {
               SizedBox(height: height / 70),
               GestureDetector(
                 onTap: () {
-                  Get.to(const ConfirmOrder());
+                  // Get.to(const ConfirmOrder());
                 },
                 child: payment_type(
                     "assets/images/bank_tranfer.png",
@@ -102,7 +102,7 @@ class _NewBuyStockState extends State<NewBuyStock> {
               SizedBox(height: height / 35),
               GestureDetector(
                 onTap: () {
-                  Get.to(const ConfirmOrder());
+                  // Get.to(const ConfirmOrder());
                 },
                 child: payment_type(
                     "assets/images/apple_pay.png",
@@ -116,7 +116,7 @@ class _NewBuyStockState extends State<NewBuyStock> {
               SizedBox(height: height / 70),
               GestureDetector(
                 onTap: () {
-                  Get.to(const ConfirmOrder());
+                  // Get.to(const ConfirmOrder());
                 },
                 child: payment_type(
                     "assets/images/pay_pal.png",
@@ -130,7 +130,7 @@ class _NewBuyStockState extends State<NewBuyStock> {
               SizedBox(height: height / 15),
               GestureDetector(
                   onTap: () {
-                    Get.to(const ConfirmOrder());
+                    Get.to( ConfirmOrder(amount: amount));
                   },
                   child: button("Continue", notifier.getbluecolor,
                       notifier.getwihitecolor)),

@@ -74,161 +74,103 @@ class _ChartState extends State<Chart> {
             if (stockController.fetchedStock.isEmpty) {
               return SizedBox(
                   height: height*60,
-                  child: Center(child: CircularProgressIndicator(strokeAlign: 3,))); // or any other error handling logic
+                  child: Center(child: CircularProgressIndicator())); // or any other error handling logic
             }
             final stock = stockController.fetchedStock[0];
             return
-                Column(
-                    children: [
-                      SizedBox(height: height / 50),
-                      Row(
-                        children: [
-                          SizedBox(width: width / 20),
-                          // Image.asset("assets/images/paypal.png", height: height / 30),
-                          Text(
-                            "${stock['tradingSymbol']}",
-                            style: TextStyle(
-                                fontFamily: 'Gilroy_Bold',
-                                fontSize: 12.sp,
-                                color: notifier.getblck),
-                          ),
-                          SizedBox(width: width / 100),
-                          Text(
-                            "${stock['exchange']}",
-                            style: TextStyle(
-                                fontFamily: 'Gilroy_Bold',
-                                fontSize: 12.sp,
-                                color: notifier.getgrey),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height / 70),
-                      Row(
-                        children: [
-                          SizedBox(width: width / 20),
-                          Text(
-                            "\₹${stock['ltp']}",
-                            style: TextStyle(
-                                color: notifier.getblck,
-                                fontFamily: 'Gilroy_Bold',
-                                fontSize: 27.sp),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height / 200),
-                      Row(
-                        children: [
-                          SizedBox(width: width / 25),
-                          const Icon(
-                            Icons.arrow_drop_up_outlined,
-                            color: Color(0xff19C09A),
-                          ),
-                          Text(
-                            "${stock['netChange']} (${stock['percentChange']}%)",
-                            style: TextStyle(
-                                color: const Color(0xff19C09A),
-                                fontSize: 12.sp,
-                                fontFamily: 'Gilroy_Bold'),
-                          ),
-                          SizedBox(width: width / 100),
-                          Text(
-                            "Today",
-                            style: TextStyle(
-                                color: notifier.getgrey,
-                                fontSize: 12.sp,
-                                fontFamily: 'Gilroy_Bold'),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: width / 1.5,
-                        width: 320.w,
-                        child: DefaultTabController(
-                          length: 5,
-                          child: Column(
-                            children: <Widget>[
-                              ButtonsTabBar(
-                                backgroundColor: const Color(0xff6A94B4FF),
-                                unselectedBackgroundColor:
-                                    const Color(0xffeff6ff),
-                                unselectedLabelStyle:
-                                    const TextStyle(color: Colors.black),
-                                labelStyle: const TextStyle(
-                                    color: Colors.green,
-                                    fontFamily: 'Gilroy_Bold'),
-                                tabs: [
-                                  Tab(
-                                    child: Container(
-                                      height: height / 19,
-                                      width: width / 8,
-                                      decoration: const BoxDecoration(
-                                        // border: Border.all(color: const Color(0xff8f94b0)),
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
+                SingleChildScrollView(
+                  child: Column(
+                      children: [
+                        SizedBox(height: height / 50),
+                        Row(
+                          children: [
+                            SizedBox(width: width / 20),
+                            // Image.asset("assets/images/paypal.png", height: height / 30),
+                            Text(
+                              "${stock['tradingSymbol']}",
+                              style: TextStyle(
+                                  fontFamily: 'Gilroy_Bold',
+                                  fontSize: 12.sp,
+                                  color: notifier.getblck),
+                            ),
+                            SizedBox(width: width / 100),
+                            Text(
+                              "${stock['exchange']}",
+                              style: TextStyle(
+                                  fontFamily: 'Gilroy_Bold',
+                                  fontSize: 12.sp,
+                                  color: notifier.getgrey),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: height / 70),
+                        Row(
+                          children: [
+                            SizedBox(width: width / 20),
+                            Text(
+                              "\₹${stock['ltp']}",
+                              style: TextStyle(
+                                  color: notifier.getblck,
+                                  fontFamily: 'Gilroy_Bold',
+                                  fontSize: 27.sp),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: height / 200),
+                        Row(
+                          children: [
+                            SizedBox(width: width / 25),
+                            const Icon(
+                              Icons.arrow_drop_up_outlined,
+                              color: Color(0xff19C09A),
+                            ),
+                            Text(
+                              "${stock['netChange']} (${stock['percentChange']}%)",
+                              style: TextStyle(
+                                  color: const Color(0xff19C09A),
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Gilroy_Bold'),
+                            ),
+                            SizedBox(width: width / 100),
+                            Text(
+                              "Today",
+                              style: TextStyle(
+                                  color: notifier.getgrey,
+                                  fontSize: 12.sp,
+                                  fontFamily: 'Gilroy_Bold'),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: width / 1.5,
+                          width: 320.w,
+                          child: DefaultTabController(
+                            length: 5,
+                            child: Column(
+                              children: <Widget>[
+                                ButtonsTabBar(
+                                  backgroundColor: const Color(0xff6A94B4FF),
+                                  unselectedBackgroundColor:
+                                      const Color(0xffeff6ff),
+                                  unselectedLabelStyle:
+                                      const TextStyle(color: Colors.black),
+                                  labelStyle: const TextStyle(
+                                      color: Colors.green,
+                                      fontFamily: 'Gilroy_Bold'),
+                                  tabs: [
+                                    Tab(
+                                      child: Container(
+                                        height: height / 19,
+                                        width: width / 8,
+                                        decoration: const BoxDecoration(
+                                          // border: Border.all(color: const Color(0xff8f94b0)),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
                                         ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "1D",
-                                          style: TextStyle(
-                                              fontFamily: 'Gilroy_Bold',
-                                              fontSize: 14.sp),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Container(
-                                      height: height / 19,
-                                      width: width / 8,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "1W",
-                                          style: TextStyle(
-                                              fontFamily: 'Gilroy_Bold',
-                                              fontSize: 14.sp),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Container(
-                                      height: height / 19,
-                                      width: width / 8,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "1M",
-                                          style: TextStyle(
-                                              fontFamily: 'Gilroy_Bold',
-                                              fontSize: 14.sp),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Tab(
-                                    child: Container(
-                                      height: height / 19,
-                                      width: width / 8,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
+                                        child: Center(
                                           child: Text(
-                                            "1Y",
+                                            "1D",
                                             style: TextStyle(
                                                 fontFamily: 'Gilroy_Bold',
                                                 fontSize: 14.sp),
@@ -236,229 +178,298 @@ class _ChartState extends State<Chart> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Tab(
-                                    child: Container(
-                                      height: height / 19,
-                                      width: width / 8,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(5),
+                                    Tab(
+                                      child: Container(
+                                        height: height / 19,
+                                        width: width / 8,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "1W",
+                                            style: TextStyle(
+                                                fontFamily: 'Gilroy_Bold',
+                                                fontSize: 14.sp),
+                                          ),
                                         ),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          "5Y",
-                                          style: TextStyle(
-                                              fontFamily: 'Gilroy_Bold',
-                                              fontSize: 14.sp),
+                                    ),
+                                    Tab(
+                                      child: Container(
+                                        height: height / 19,
+                                        width: width / 8,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "1M",
+                                            style: TextStyle(
+                                                fontFamily: 'Gilroy_Bold',
+                                                fontSize: 14.sp),
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Expanded(
-                                child: TabBarView(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Sparkline(
-                                        useCubicSmoothing: true,
-                                        data: allData,
-                                        lineWidth: 2.0,
+                                    Tab(
+                                      child: Container(
+                                        height: height / 19,
+                                        width: width / 8,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Text(
+                                              "1Y",
+                                              style: TextStyle(
+                                                  fontFamily: 'Gilroy_Bold',
+                                                  fontSize: 14.sp),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Sparkline(
-                                        useCubicSmoothing: true,
-                                        data: allData,
-                                        lineWidth: 2.0,
+                                    Tab(
+                                      child: Container(
+                                        height: height / 19,
+                                        width: width / 8,
+                                        decoration: const BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "5Y",
+                                            style: TextStyle(
+                                                fontFamily: 'Gilroy_Bold',
+                                                fontSize: 14.sp),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Sparkline(
-                                        useCubicSmoothing: true,
-                                        data: allData,
-                                        lineWidth: 2.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Sparkline(
-                                        useCubicSmoothing: true,
-                                        data: allData,
-                                        lineWidth: 2.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Sparkline(
-                                        useCubicSmoothing: true,
-                                        data: allData,
-                                        lineWidth: 2.0,
-                                      ),
-                                    ),
-                                    // oneday(),
-                                    //   oneweek(),
-                                    //   onemonth(),
-                                    //   oneyear(),
-                                    //   fiveyear(),
                                   ],
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: TabBarView(
+                                    physics: NeverScrollableScrollPhysics(),
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Sparkline(
+                                          useCubicSmoothing: true,
+                                          data: allData,
+                                          lineWidth: 2.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Sparkline(
+                                          useCubicSmoothing: true,
+                                          data: allData,
+                                          lineWidth: 2.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Sparkline(
+                                          useCubicSmoothing: true,
+                                          data: allData,
+                                          lineWidth: 2.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Sparkline(
+                                          useCubicSmoothing: true,
+                                          data: allData,
+                                          lineWidth: 2.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Sparkline(
+                                          useCubicSmoothing: true,
+                                          data: allData,
+                                          lineWidth: 2.0,
+                                        ),
+                                      ),
+                                      // oneday(),
+                                      //   oneweek(),
+                                      //   onemonth(),
+                                      //   oneyear(),
+                                      //   fiveyear(),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
+                          // child: ListView.builder(
+                          //   itemCount: chart_duration.length,
+                          //   scrollDirection: Axis.horizontal,
+                          //   itemBuilder:  (context, index) {
+                          //   return GestureDetector(
+                          //     onTap: () {
+                          //       setState(() {
+                          //         selectedindex = index;
+                          //       });
+                          //     },
+                          //     child: Row(
+                          //       children: [
+                          //         Container(
+                          //           width: 60.w,
+                          //           decoration: BoxDecoration(
+                          //             color: selectedindex == index
+                          //                 ? notifier.getbluecolor
+                          //                 : Colors.transparent,
+                          //             border: Border.all(
+                          //               color: Colors.grey,
+                          //             ),
+                          //             borderRadius: BorderRadius.all(
+                          //               Radius.circular(10.sp),
+                          //             ),
+                          //           ),
+                          //           child: Center(
+                          //             child: Text(
+                          //               chart_duration[index],
+                          //               style: TextStyle(
+                          //                   fontFamily: 'Gilroy_Bold',
+                          //                   color: selectedindex == index
+                          //                       ? Colors.white
+                          //                       : notifier.getbluecolor,
+                          //                   fontWeight: FontWeight.normal,
+                          //                   fontSize: 12.sp),
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         SizedBox(width: 20.w)
+                          //       ],
+                          //     ),
+                          //   );
+                          // },),
                         ),
-                        // child: ListView.builder(
-                        //   itemCount: chart_duration.length,
-                        //   scrollDirection: Axis.horizontal,
-                        //   itemBuilder:  (context, index) {
-                        //   return GestureDetector(
-                        //     onTap: () {
-                        //       setState(() {
-                        //         selectedindex = index;
-                        //       });
-                        //     },
-                        //     child: Row(
-                        //       children: [
-                        //         Container(
-                        //           width: 60.w,
-                        //           decoration: BoxDecoration(
-                        //             color: selectedindex == index
-                        //                 ? notifier.getbluecolor
-                        //                 : Colors.transparent,
-                        //             border: Border.all(
-                        //               color: Colors.grey,
-                        //             ),
-                        //             borderRadius: BorderRadius.all(
-                        //               Radius.circular(10.sp),
-                        //             ),
-                        //           ),
-                        //           child: Center(
-                        //             child: Text(
-                        //               chart_duration[index],
-                        //               style: TextStyle(
-                        //                   fontFamily: 'Gilroy_Bold',
-                        //                   color: selectedindex == index
-                        //                       ? Colors.white
-                        //                       : notifier.getbluecolor,
-                        //                   fontWeight: FontWeight.normal,
-                        //                   fontSize: 12.sp),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         SizedBox(width: 20.w)
-                        //       ],
-                        //     ),
-                        //   );
-                        // },),
-                      ),
-                      // Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      //   children: [
-                      //
-                      //     Cart_type("1D"),
-                      //     Cart_type("1W"),
-                      //     Cart_type("1M"),
-                      //     Cart_type("1Y"),
-                      //     Cart_type("5Y"),
-                      //   ],
-                      // ),
+                        // Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //   children: [
+                        //
+                        //     Cart_type("1D"),
+                        //     Cart_type("1W"),
+                        //     Cart_type("1M"),
+                        //     Cart_type("1Y"),
+                        //     Cart_type("5Y"),
+                        //   ],
+                        // ),
 
-                      SizedBox(height: height / 70),
-                      Row(
-                        children: [
-                          SizedBox(width: width / 20),
-                          Text(
-                            "Statistics",
-                            style: TextStyle(
-                                color: notifier.getblck,
-                                fontFamily: 'Gilroy_Bold',
-                                fontSize: 20.sp),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height / 70),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Statistics_text("Open", notifier.getgrey),
-                              Statistics_text("Low", notifier.getgrey),
-                              Statistics_text("High", notifier.getgrey),
-                            ],
-                          ),
-                          // SizedBox(width: w,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Statistics_text(
-                                  "${stock['open']}", notifier.getblck),
-                              Statistics_text(
-                                  "${stock['low']}", notifier.getblck),
-                              Statistics_text(
-                                  "${stock['high']}", notifier.getblck),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Statistics_text("Volume", notifier.getgrey),
-                              Statistics_text(
-                                  "52 Week Low", notifier.getgrey),
-                              Statistics_text(
-                                  "52 Week High", notifier.getgrey),
-                            ],
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Statistics_text("${stock['tradeVolume']}",
-                                  notifier.getblck),
-                              Statistics_text(
-                                  "${stock['52WeekLow']}", notifier.getblck),
-                              Statistics_text(
-                                  "${stock['52WeekHigh']}", notifier.getblck),
-                            ],
-                          ),
-                        ],
-                      ),
+                        SizedBox(height: height / 70),
+                        Row(
+                          children: [
+                            SizedBox(width: width / 20),
+                            Text(
+                              "Statistics",
+                              style: TextStyle(
+                                  color: notifier.getblck,
+                                  fontFamily: 'Gilroy_Bold',
+                                  fontSize: 20.sp),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: height / 70),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Statistics_text("Open", notifier.getgrey),
+                                Statistics_text("Low", notifier.getgrey),
+                                Statistics_text("High", notifier.getgrey),
+                              ],
+                            ),
+                            // SizedBox(width: w,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Statistics_text(
+                                    "${stock['open']}", notifier.getblck),
+                                Statistics_text(
+                                    "${stock['low']}", notifier.getblck),
+                                Statistics_text(
+                                    "${stock['high']}", notifier.getblck),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Statistics_text("Volume", notifier.getgrey),
+                                Statistics_text(
+                                    "52 Week Low", notifier.getgrey),
+                                Statistics_text(
+                                    "52 Week High", notifier.getgrey),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Statistics_text("${stock['tradeVolume']}",
+                                    notifier.getblck),
+                                Statistics_text(
+                                    "${stock['52WeekLow']}", notifier.getblck),
+                                Statistics_text(
+                                    "${stock['52WeekHigh']}", notifier.getblck),
+                              ],
+                            ),
+                          ],
+                        ),
 
-                      SizedBox(height: height *0.2),
+                        SizedBox(height: height *0.1),
 
-                      //buy sell btn
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              // Get.to(const BuyStock());
-                            },
-                            child: bu_sell_button(
-                                "Sell", notifier.getwihitecolor,
-                                notifier.getbluecolor),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(BuyStock(
-                                stokeName: "${stock['tradingSymbol']}",
-                                stokeExg: '${stock['exchange']}',
-                                stokePrice: '${stock['ltp']}',
-                              ));
-                            },
-                            child: bu_sell_button(
-                                "Buy", notifier.getbluecolor,
-                                notifier.getwihitecolor),
-                          ),
-                        ],
-                      )
-                    ],
-                  )
+                        //buy sell btn
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                // Get.to(const BuyStock());
+                                Get.to(BuyStock(
+                                    stokeName: "${stock['tradingSymbol']}",
+                                    stokeExg: '${stock['exchange']}',
+                                    stokePrice: '${stock['ltp']}',
+                                    stokeToken: '${stock['symbolToken']}',
+                                    stokeType: 'sell'
+                                ));
+                              },
+                              child: bu_sell_button(
+                                  "Sell", notifier.getwihitecolor,
+                                  notifier.getbluecolor),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(BuyStock(
+                                  stokeName: "${stock['tradingSymbol']}",
+                                  stokeExg: '${stock['exchange']}',
+                                  stokePrice: '${stock['ltp']}',
+                                  stokeToken: '${stock['symbolToken']}',
+                                    stokeType: 'buy'
+                                ));
+                              },
+                              child: bu_sell_button(
+                                  "Buy", notifier.getbluecolor,
+                                  notifier.getwihitecolor),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                )
                 ;
           }),
         );

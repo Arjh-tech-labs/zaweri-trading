@@ -12,13 +12,16 @@ import '../../card_type/Custtom_csrd_type.dart';
 import '../../utils/medeiaqury/medeiaqury.dart';
 
 class ConfirmOrder extends StatefulWidget {
-  const ConfirmOrder({Key? key}) : super(key: key);
+  final String amount;
+  const ConfirmOrder({Key? key, required this.amount,}) : super(key: key);
 
   @override
   State<ConfirmOrder> createState() => _ConfirmOrderState();
+
 }
 
 class _ConfirmOrderState extends State<ConfirmOrder> {
+
   late ColorNotifier notifier;
   getdarkmodepreviousstate() async {
     final prefs = await SharedPreferences.getInstance();
@@ -63,7 +66,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 ),
                 Center(
                   child: Text(
-                    "\₹128.00",
+                    "\₹${widget.amount}",
                     style: TextStyle(
                         color: notifier.getblck,
                         fontSize: 35.sp,
@@ -86,7 +89,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 SizedBox(height: height / 25),
                 exchange_stock(
                     "assets/images/icici.png", "icici bank", "icici",
-                    "\₹127.00"),
+                    "\₹${widget.amount}"),
                 SizedBox(height: height / 25),
                 Row(
                   children: [
@@ -131,7 +134,7 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
                 SizedBox(height: height / 100),
                 Paymentdetails(
                     "assets/images/Approx.png", "Approx. Share Price",
-                    "\₹127.00", notifier.getblck),
+                    "\₹${widget.amount}", notifier.getblck),
                 SizedBox(height: height / 100),
                 Paymentdetails("assets/images/Approx.Shares.png",
                     "Approx. Shares", "0.003", notifier.getblck),

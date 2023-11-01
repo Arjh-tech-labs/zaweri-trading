@@ -1,3 +1,4 @@
+import 'package:Zaveri/bottom_bar/bottom_pages/stock_exchange_tabs/ModleView/buySellModle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,13 +7,18 @@ import 'package:Zaveri/Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart'
 import 'package:Zaveri/Custom_BlocObserver/button/custtom_button.dart';
 import 'package:Zaveri/Custom_BlocObserver/notifire_clor.dart';
 import 'package:Zaveri/screens/Payment%20Method/Payment%20Method.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import '../../../Controller/buy_stock_controller.dart';
+import '../../../Custom_BlocObserver/buy_sell_button/buy_sell_button.dart';
 import '../../../utils/medeiaqury/medeiaqury.dart';
 
 class BuyStock extends StatefulWidget {
   final String? stokeName;
   final String? stokeExg;
   final String? stokePrice;
-  const BuyStock({Key? key, this.stokeName, this.stokeExg, this.stokePrice})
+  final String? stokeToken;
+  final String? stokeType;
+  const BuyStock({Key? key, this.stokeName, this.stokeExg, this.stokePrice,  this.stokeToken,  this.stokeType})
       : super(key: key);
 
   @override
@@ -22,6 +28,8 @@ class BuyStock extends StatefulWidget {
 class _BuyStockState extends State<BuyStock> {
   late ColorNotifier notifier;
   double total = 0;
+  BuyStockController buyStockController = Get.put(BuyStockController());
+  TextEditingController qtyController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +92,7 @@ class _BuyStockState extends State<BuyStock> {
                       height: 40.h,
                       width: 100,
                       child: TextField(
-                        // controller: searchName,
+                        controller: qtyController,
                         style: TextStyle(color: Colors.blue),
                         onChanged: (value) {
                           if (value.length != 0) {
@@ -162,10 +170,26 @@ class _BuyStockState extends State<BuyStock> {
 
                 GestureDetector(
                     onTap: () {
-                      Get.to(const PaymentMethod());
+                      buyStockController.buyStockApi(
+                          stokeName: widget.stokeName ?? '',
+                          stokeExg: widget.stokeExg ?? '',
+                          stokePrice: widget.stokePrice??"",
+                          stokeToken: widget.stokeToken ?? '',
+                          stokeQty: qtyController.text,
+                          stokeType: widget.stokeType??"",
+                          context: context
+                      );
+                      setState(() {
+                        loading.value = true;
+                      });
+                      // Get.to(const PaymentMethod());
                     },
-                    child: button(
-                        "Buy", notifier.getbluecolor, notifier.getwihitecolor))
+                    child: Obx(() => loading.value
+                        ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                        : button("${widget.stokeType??""}".toUpperCase(), notifier.getbluecolor,
+                        notifier.getwihitecolor)))
               ],
             ),
           ),

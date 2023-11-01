@@ -54,7 +54,7 @@ class _choice_paymentState extends State<choice_payment> {
                 SizedBox(height: height / 50),
                 GestureDetector(
                   onTap: () {
-                    Get.to(const ConfirmOrder());
+                    // Get.to(const ConfirmOrder());
                   },
                   child: payment_type(
                       "assets/images/debit_card.png",
@@ -68,7 +68,7 @@ class _choice_paymentState extends State<choice_payment> {
                 SizedBox(height: height / 70),
                 GestureDetector(
                   onTap: () {
-                    Get.to(const ConfirmOrder());
+                    // Get.to(const ConfirmOrder());
                   },
                   child: payment_type(
                       "assets/images/bank_tranfer.png",
@@ -90,7 +90,7 @@ class _choice_paymentState extends State<choice_payment> {
                 SizedBox(height: height / 35),
                 GestureDetector(
                   onTap: () {
-                    Get.to(const ConfirmOrder());
+                    // Get.to(const ConfirmOrder());
                   },
                   child: payment_type(
                       "assets/images/apple_pay.png",
@@ -104,7 +104,7 @@ class _choice_paymentState extends State<choice_payment> {
                 SizedBox(height: height / 70),
                 GestureDetector(
                   onTap: () {
-                    Get.to(const ConfirmOrder());
+                    // Get.to(const ConfirmOrder());
                   },
                   child: payment_type(
                       "assets/images/pay_pal.png",
@@ -118,7 +118,7 @@ class _choice_paymentState extends State<choice_payment> {
                 SizedBox(height: height / 3),
                 GestureDetector(
                     onTap: () {
-                      Get.to(const ConfirmOrder());
+                      Get.to(ConfirmOrder(amount: "3900"));
                     },
                     child: button("Continue", notifier.getbluecolor,
                         notifier.getwihitecolor))

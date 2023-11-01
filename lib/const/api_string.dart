@@ -8,4 +8,5 @@ const String searchStockUrl = "${baseUrl}api/user/stock_filter";
 const String wishListUrl = "${baseUrl}api/user/wishlist/";
 const String portfolioUrl = "${baseUrl}api/user/portfolio-list/";
 const String orderListUrl = "${baseUrl}api/user/orderList/";
+const String buyStockListUrl = "${baseUrl}api/user/generateOrder";
 const String topStockUrl = "${baseUrl}api/user/topstocks";

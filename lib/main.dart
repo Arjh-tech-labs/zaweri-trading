@@ -38,7 +38,6 @@ class _AppState extends State<App> {
 
   }
 
-
   setUpNotification() async {
     String? token = await FirebaseMessaging.instance.getToken();
     print('FCM Token: $token');

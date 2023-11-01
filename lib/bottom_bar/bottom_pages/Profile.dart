@@ -39,8 +39,7 @@ class _ProfileState extends State<Profile> {
   }
 
   void openWhatsApp() async {
-    print('whatsapp print');
-    final phoneNumber = '9170721919'; // Remove spaces and special characters.
+    final phoneNumber = '9170721919'; // Replace with your number.
     final message = 'Hello, this is a WhatsApp message!'; // Replace with your message.
     final url = 'https://wa.me/$phoneNumber?text=${Uri.encodeComponent(message)}';
 
@@ -81,7 +80,7 @@ class _ProfileState extends State<Profile> {
                           placeholder: (context, url) =>
                               CircularProgressIndicator(),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              Icon(Icons.person),
                         ),
                       ),
                       // Image.asset("assets/images/profile.png", height: height / 14),
