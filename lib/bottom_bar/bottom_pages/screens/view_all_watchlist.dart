@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:Zaveri/main.dart';
+import 'package:Zaveri/utils/medeiaqury/medeiaqury.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,17 @@ class _AllWatchListState extends State<AllWatchList> {
   final SurajController surajController = Get.find();
   final StockController stockController = Get.find();
   final HistController histController = Get.find();
+  bool isLoading = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +52,13 @@ class _AllWatchListState extends State<AllWatchList> {
         ),
       ),
      body: GetBuilder<SurajController>(builder: (surajController) {
+       if (surajController.suraj.isEmpty) {
+         return SizedBox(
+             height: height*60,
+             child: isLoading
+                 ? Center(child: CircularProgressIndicator()) // Display loading indicator
+                 : Center(child: Text("No any your stock in Watchlist"))); // or any other error handling logic
+       }
        return ListView.separated(
          // shrinkWrap: true,
          // physics: NeverScrollableScrollPhysics(),

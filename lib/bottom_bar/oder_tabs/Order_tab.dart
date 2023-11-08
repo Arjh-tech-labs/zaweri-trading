@@ -19,14 +19,21 @@ class _ordertabsState extends State<ordertabs> {
   late ColorNotifier notifier;
   final OrderController orderController = Get.find();
   // final OrderController orderController = Get.put(OrderController());
-
+  bool isLoading = true;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     orderController.orderApi();
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
 
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +46,16 @@ class _ordertabsState extends State<ordertabs> {
           backgroundColor: notifier.getwihitecolor,
           body: GetBuilder<OrderController>(
             builder: (orderController) {
+
+              if (orderController.orderList.isEmpty) {
+                return SizedBox(
+                    height: height*60,
+                    child:  isLoading
+                        ? Center(child: CircularProgressIndicator()) // Display loading indicator
+                        : Center(child: Text("You have no any order")) // or any other error handling logic
+                );
+
+              };
               return ListView.separated(
                 shrinkWrap: true,
                 itemCount: orderController.orderList.length,
@@ -73,6 +90,10 @@ class _ordertabsState extends State<ordertabs> {
         );
       },
     );
+  }
+
+  Loading()async{
+
   }
 
   // Widget buton(colorbutton, buttontext, buttontextcolor) {

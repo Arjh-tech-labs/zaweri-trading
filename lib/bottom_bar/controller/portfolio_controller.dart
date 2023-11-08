@@ -8,6 +8,7 @@ import '../../const/api_string.dart';
 class PortfolioController extends GetxController{
   var portfolioList = [].obs;
   void portfolioApi()async{
+    portfolioList.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int userid = prefs.getInt('userid')!;
     String token = prefs.getString('barrierToken')!;
@@ -22,7 +23,7 @@ class PortfolioController extends GetxController{
       portfolioList.value = data['orders'];
       callPortfolio();
       update();
-      print(portfolioList.length);
+      // print(portfolioList.length);
     } else {
     }
   }

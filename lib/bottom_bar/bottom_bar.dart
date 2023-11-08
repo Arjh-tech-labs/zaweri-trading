@@ -53,7 +53,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final screen = [
     const Home(),
     const Portfolio(),
-    const Stock_Exchange(),
+    Center(child: Text("FnO Coming soon"),),
+    // const Stock_Exchange(),
     const Order(),
     const Profile(),
   ];

@@ -127,11 +127,12 @@ class _StockListingState extends State<StockListing> {
                     trailing: IconButton(
                         onPressed: () {
                           AddFav(
-                            stockSymbol: stockToken,
+                            stockSymbol: stockName,
                             stockToken: stockToken,
                             marketType: stockExg,
                             filterName: searchName.text
                           );
+
                         },
                         icon: wishlistStatus == 0
                             ? Icon(Icons.bookmark_border)

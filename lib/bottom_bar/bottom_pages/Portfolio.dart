@@ -28,8 +28,7 @@ class _PortfolioState extends State<Portfolio> {
   final StockController stockController = Get.find();
   final HistController histController = Get.put(HistController());
 
-  // late List<GDPData> _chartData;
-  // late TooltipBehavior _tooltipBehavior;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -37,6 +36,11 @@ class _PortfolioState extends State<Portfolio> {
     // _tooltipBehavior = TooltipBehavior(enable: true);
     portfolioController.portfolioApi();
     super.initState();
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   List<ChartData> chartData = [
@@ -60,114 +64,124 @@ class _PortfolioState extends State<Portfolio> {
           appBar: NewCustomAppBar(
               notifier.getwihitecolor, "Portfolio", notifier.getblck,
               height: height / 15),
-          body: Column(
-            children: [
-              // SizedBox(height: height / 40),
-              // Row(
-              //   children: [
-              //     GestureDetector(
-              //       onTap: () {
-              //         Get.to(const Stock_Detail());
-              //       },
-              //       child: up_down_rate("assets/images/Today_Gains.png",
-              //           "\₹2,209", "Today Gains"),
-              //     ),
-              //     const Spacer(),
-              //     GestureDetector(
-              //       onTap: () {
-              //         Get.to(const Stock_Detail());
-              //       },
-              //       child: up_down_rate("assets/images/Overall Loss.png",
-              //           "\₹5,440", "Overall Loss"),
-              //     ),
-              //     SizedBox(width: width / 15),
-              //   ],
-              // ),
-              // SizedBox(height: height / 25),
-              // Row(
-              //   children: [
-              //     SizedBox(width: width / 20),
-              //     Text(
-              //       "Portfolio Balance",
-              //       style: TextStyle(
-              //           fontSize: 14.sp,
-              //           color: notifier.getgrey,
-              //           fontFamily: 'Gilroy_Medium'),
-              //     ),
-              //     const Spacer(),
-              //     Image.asset("assets/images/ball.png", height: height / 20),
-              //     SizedBox(width: width / 15),
-              //   ],
-              // ),
-              // SizedBox(height: height / 200),
-              // Row(
-              //   children: [
-              //     SizedBox(width: width / 20),
-              //     Text(
-              //       "\₹97,326.46",
-              //       style: TextStyle(
-              //           color: notifier.getblck,
-              //           fontFamily: 'Gilroy_Bold',
-              //           fontSize: 27.sp),
-              //     ),
-              //   ],
-              // ),
-              // SizedBox(height: height / 200),
-              // Row(
-              //   children: [
-              //     SizedBox(width: width / 25),
-              //     const Icon(
-              //       Icons.arrow_drop_up_outlined,
-              //       color: Color(0xff19C09A),
-              //     ),
-              //     Text(
-              //       "65.63 (76,23%)",
-              //       style: TextStyle(
-              //           color: const Color(0xff19C09A),
-              //           fontSize: 12.sp,
-              //           fontFamily: 'Gilroy_Bold'),
-              //     ),
-              //     SizedBox(width: width / 100),
-              //     Text(
-              //       "Today",
-              //       style: TextStyle(
-              //           color: notifier.getgrey,
-              //           fontSize: 12.sp,
-              //           fontFamily: 'Gilroy_Bold'),
-              //     ),
-              //   ],
-              // ),
-              SizedBox(height: height / 50),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: portfolioController.portfolioStock.length,
-                  itemBuilder: (context, index) {
-                    final portfolio =
-                    portfolioController.portfolioStock[index];
-                    final sendExchange = portfolio['exchange'].toString();
-                    final sendToken = portfolio['symbolToken'].toString();
-                    return Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            stockController.calEverySec(
-                                exchange: sendExchange, token: sendToken);
-                            histController.histData(
-                                exchange: sendExchange, token: sendToken);
-                            Get.to(Stock_Detail());
-                          },
-                          child: custtom_button(
-                              "${portfolio['tradingSymbol']}", "${portfolio['exchange']}", "\₹${portfolio['ltp']}", "${portfolio['percentChange']}%"),
-                        ),
-                      ],
-                    );
-                  }, separatorBuilder: (BuildContext context, int index) {
-                    return Divider( thickness: 0.5,);
-                },
-                ),
-              ),
+          body: GetBuilder<PortfolioController>(builder: (portfolioController) {
+            if (portfolioController.portfolioList.isEmpty) {
+              return SizedBox(
+                  height: height*60,
+                  child: isLoading
+                      ? Center(child: CircularProgressIndicator()) // Display loading indicator
+                      : Center(child: Text("No any your stock in portfolio"))); // or any other error handling logic
+            }
+              return Column(
+                children: [
+                  // SizedBox(height: height / 40),
+                  // Row(
+                  //   children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Get.to(const Stock_Detail());
+                  //       },
+                  //       child: up_down_rate("assets/images/Today_Gains.png",
+                  //           "\₹2,209", "Today Gains"),
+                  //     ),
+                  //     const Spacer(),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Get.to(const Stock_Detail());
+                  //       },
+                  //       child: up_down_rate("assets/images/Overall Loss.png",
+                  //           "\₹5,440", "Overall Loss"),
+                  //     ),
+                  //     SizedBox(width: width / 15),
+                  //   ],
+                  // ),
+                  // SizedBox(height: height / 25),
+                  // Row(
+                  //   children: [
+                  //     SizedBox(width: width / 20),
+                  //     Text(
+                  //       "Portfolio Balance",
+                  //       style: TextStyle(
+                  //           fontSize: 14.sp,
+                  //           color: notifier.getgrey,
+                  //           fontFamily: 'Gilroy_Medium'),
+                  //     ),
+                  //     const Spacer(),
+                  //     Image.asset("assets/images/ball.png", height: height / 20),
+                  //     SizedBox(width: width / 15),
+                  //   ],
+                  // ),
+                  // SizedBox(height: height / 200),
+                  // Row(
+                  //   children: [
+                  //     SizedBox(width: width / 20),
+                  //     Text(
+                  //       "\₹97,326.46",
+                  //       style: TextStyle(
+                  //           color: notifier.getblck,
+                  //           fontFamily: 'Gilroy_Bold',
+                  //           fontSize: 27.sp),
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(height: height / 200),
+                  // Row(
+                  //   children: [
+                  //     SizedBox(width: width / 25),
+                  //     const Icon(
+                  //       Icons.arrow_drop_up_outlined,
+                  //       color: Color(0xff19C09A),
+                  //     ),
+                  //     Text(
+                  //       "65.63 (76,23%)",
+                  //       style: TextStyle(
+                  //           color: const Color(0xff19C09A),
+                  //           fontSize: 12.sp,
+                  //           fontFamily: 'Gilroy_Bold'),
+                  //     ),
+                  //     SizedBox(width: width / 100),
+                  //     Text(
+                  //       "Today",
+                  //       style: TextStyle(
+                  //           color: notifier.getgrey,
+                  //           fontSize: 12.sp,
+                  //           fontFamily: 'Gilroy_Bold'),
+                  //     ),
+                  //   ],
+                  // ),
+                  SizedBox(height: height / 50),
+                  Expanded(
+                    child: ListView.separated(
+                      itemCount: portfolioController.portfolioStock.length,
+                      itemBuilder: (context, index) {
+                        final portfolio =
+                        portfolioController.portfolioStock[index];
+                        final sendExchange = portfolio['exchange'].toString();
+                        final sendToken = portfolio['symbolToken'].toString();
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                stockController.calEverySec(
+                                    exchange: sendExchange, token: sendToken);
+                                histController.histData(
+                                    exchange: sendExchange, token: sendToken);
+                                Get.to(Stock_Detail());
+                              },
+                              child: custtom_button(
+                                  "${portfolio['tradingSymbol']}", "${portfolio['exchange']}", "\₹${portfolio['ltp']}", "${portfolio['percentChange']}%"),
+                            ),
+                          ],
+                        );
+                      }, separatorBuilder: (BuildContext context, int index) {
+                        return Divider( thickness: 0.5,);
+                    },
+                    ),
+                  ),
 
-            ],
+                ],
+              );
+            }
           ),
         );
       },

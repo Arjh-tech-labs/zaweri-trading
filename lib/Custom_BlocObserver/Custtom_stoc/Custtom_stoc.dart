@@ -7,12 +7,13 @@ import '../notifire_clor.dart';
 
 // ignore: must_be_immutable
 class Custtom_stoc extends StatefulWidget {
-  String? title;
-  String? subtitle;
-  String? stockprice;
-  String? up_down;
-  Color? iconcolor;
-  Custtom_stoc(this.title, this.subtitle,
+  final String? title;
+  final String? qty;
+  final String? subtitle;
+  final String? stockprice;
+  final String? up_down;
+  final Color? iconcolor;
+  const Custtom_stoc(this.title,this.qty, this.subtitle,
       this.stockprice, this.up_down, this.iconcolor);
 
   @override
@@ -45,7 +46,8 @@ class _Custtom_stocState extends State<Custtom_stoc> {
     return ScreenUtilInit(
       builder: (_,child)
     {
-      return Container(
+      return
+        Container(
         // height: height / 5,
         width: width / 2.1,
         margin: EdgeInsets.symmetric(horizontal: 8,vertical: 5),
@@ -58,12 +60,23 @@ class _Custtom_stocState extends State<Custtom_stoc> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              widget.title!,
-              style: TextStyle(
-                  color: notifier.getblck,
-                  fontSize: 15.sp,
-                  fontFamily: 'Gilroy_Bold'),
+            Row(
+              children: [
+                Text(
+                  widget.title!,
+                  style: TextStyle(
+                      color: notifier.getblck,
+                      fontSize: 15.sp,
+                      fontFamily: 'Gilroy_Bold'),
+                ), const Spacer(),
+                Text(
+                  widget.qty!,
+                  style: TextStyle(
+                      color: notifier.getblck,
+                      fontSize: 12.sp,
+                      fontFamily: 'Gilroy_Bold'),
+                ),
+              ],
             ),
             Text(
               widget.subtitle!,

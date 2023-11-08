@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class WalletController extends GetxController{
-  double price = 0.0;
+  double price = 0;
   WalletAPI() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int userid = prefs.getInt('userid')!;
@@ -18,9 +18,9 @@ class WalletController extends GetxController{
     if (data["status"] == 1) {
       if (data["status"] == 1) {
         final wallet = data["wallet"];
-        price = wallet['balance'];
+        price = double.parse(wallet['balance'].toString());
         update();
-        // print(price);
+
       }
     }
   }

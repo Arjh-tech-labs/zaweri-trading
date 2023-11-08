@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
   final TopStockController topStockController = Get.find();
 
   late ColorNotifier notifier;
-
+  bool isLoading = true;
   int touchedIndex = -1;
   String name='';
   @override
@@ -47,6 +47,11 @@ class _HomeState extends State<Home> {
     portfolioController.portfolioApi();
     topStockController.callTopStockApi();
     sharePref();
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
   }
 
   sharePref() async {
@@ -150,11 +155,21 @@ class _HomeState extends State<Home> {
                 height: height / 8,
                 child: GetBuilder<PortfolioController>(
                     builder: (portfolioController) {
+                      if (portfolioController.portfolioList.isEmpty) {
+                        return SizedBox(
+                            height: height*60,
+                            child: isLoading
+                                ? Center(child: CircularProgressIndicator()) // Display loading indicator
+                                : Center(child: Text("No any your stock in portfolio"))); // or any other error handling logic
+                      }
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemCount: portfolioController.portfolioStock.length,
                     itemBuilder: (context, index) {
+                      //for showing qty
+                      List fetchPortfolioFromApi = portfolioController.portfolioList;
+                      // print(fetchPortfolioFromApi);
                       final portfolio =
                           portfolioController.portfolioStock[index];
                       final sendExchange = portfolio['exchange'].toString();
@@ -169,10 +184,11 @@ class _HomeState extends State<Home> {
                         },
                         child: Custtom_stoc(
                           "${portfolio['tradingSymbol']}",
+                          "Qty-${fetchPortfolioFromApi[index]["quantity"]??''}",
                           "${portfolio['exchange']}",
                           "\₹${portfolio['ltp']}",
                           "${portfolio['percentChange']}%",
-                          const Color(0xffFC6C6B),
+                          const Color(0xffFC6C6B)
                         ),
                       );
                     },
@@ -272,7 +288,8 @@ class _HomeState extends State<Home> {
                 height: height / 8,
                 child: GetBuilder<TopStockController>(
                     builder: (topStockController) {
-                  return ListView.builder(
+                  return
+                    ListView.builder(
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemCount: topStockController.fetchedTopStock.length,
@@ -291,10 +308,11 @@ class _HomeState extends State<Home> {
                         },
                         child: Custtom_stoc(
                           "${topStock['tradingSymbol']}",
+                          "",
                           "${topStock['exchange']}",
                           "\₹${topStock['ltp']}",
                           "${topStock['percentChange']}%",
-                          const Color(0xffFC6C6B),
+                           Color(0xffFC6C6B),
                         ),
                       );
                     },

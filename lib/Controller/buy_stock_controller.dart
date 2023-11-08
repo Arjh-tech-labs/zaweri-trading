@@ -2,11 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-
 import '../bottom_bar/bottom_bar.dart';
 import '../bottom_bar/bottom_pages/stock_exchange_tabs/ModleView/buySellModle.dart';
 import '../bottom_bar/controller/portfolio_controller.dart';

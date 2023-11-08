@@ -63,7 +63,8 @@ class _OrderState extends State<Order> with SingleTickerProviderStateMixin {
             backgroundColor: notifier.getwihitecolor,
             appBar: NewCustomAppBar(notifier.getwihitecolor, "Order", notifier.getblck,
                 height: height/ 15),
-            body: ordertabs(),
+            body:
+            ordertabs(),
             // SingleChildScrollView(
             //   child: Column(
             //     children: [

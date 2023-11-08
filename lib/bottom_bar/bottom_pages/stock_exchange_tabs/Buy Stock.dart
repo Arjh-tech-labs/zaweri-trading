@@ -1,15 +1,14 @@
 import 'package:Zaveri/bottom_bar/bottom_pages/stock_exchange_tabs/ModleView/buySellModle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:Zaveri/Custom_BlocObserver/Custtom_app_bar/Custtom_app_bar.dart';
 import 'package:Zaveri/Custom_BlocObserver/button/custtom_button.dart';
 import 'package:Zaveri/Custom_BlocObserver/notifire_clor.dart';
-import 'package:Zaveri/screens/Payment%20Method/Payment%20Method.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 import '../../../Controller/buy_stock_controller.dart';
-import '../../../Custom_BlocObserver/buy_sell_button/buy_sell_button.dart';
 import '../../../utils/medeiaqury/medeiaqury.dart';
 
 class BuyStock extends StatefulWidget {
@@ -31,6 +30,12 @@ class _BuyStockState extends State<BuyStock> {
   BuyStockController buyStockController = Get.put(BuyStockController());
   TextEditingController qtyController = TextEditingController();
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    loading.value = false;
+  }
   @override
   Widget build(BuildContext context) {
     notifier = Provider.of<ColorNotifier>(context, listen: true);
@@ -170,18 +175,7 @@ class _BuyStockState extends State<BuyStock> {
 
                 GestureDetector(
                     onTap: () {
-                      buyStockController.buyStockApi(
-                          stokeName: widget.stokeName ?? '',
-                          stokeExg: widget.stokeExg ?? '',
-                          stokePrice: widget.stokePrice??"",
-                          stokeToken: widget.stokeToken ?? '',
-                          stokeQty: qtyController.text,
-                          stokeType: widget.stokeType??"",
-                          context: context
-                      );
-                      setState(() {
-                        loading.value = true;
-                      });
+                      CheckMarketTime();
                       // Get.to(const PaymentMethod());
                     },
                     child: Obx(() => loading.value
@@ -196,6 +190,39 @@ class _BuyStockState extends State<BuyStock> {
         ),
       );
     });
+  }
+  
+  CheckMarketTime(){
+    var now = DateTime.now();
+    var currentTime = TimeOfDay.fromDateTime(now);
+    // Define the time conditions
+    var startTime = TimeOfDay(hour: 9, minute: 15);
+    var endTime = TimeOfDay(hour: 15, minute: 30);
+
+    DateTime currentDateTime = DateTime(now.year, now.month, now.day, currentTime.hour, currentTime.minute);
+    DateTime startDateTime = DateTime(now.year, now.month, now.day, startTime.hour, startTime.minute);
+    DateTime endDateTime = DateTime(now.year, now.month, now.day, endTime.hour, endTime.minute);
+    
+    if(currentDateTime.isBefore(startDateTime) || currentDateTime.isAfter(endDateTime)){
+      Fluttertoast.showToast(
+        msg: 'Market Closed',
+        backgroundColor: Colors.black,
+      );
+
+    }else{
+      buyStockController.buyStockApi(
+          stokeName: widget.stokeName ?? '',
+          stokeExg: widget.stokeExg ?? '',
+          stokePrice: widget.stokePrice??"",
+          stokeToken: widget.stokeToken ?? '',
+          stokeQty: qtyController.text,
+          stokeType: widget.stokeType??"",
+          context: context
+      );
+      setState(() {
+        loading.value = true;
+      });
+    }
   }
 
   Widget max_price(txt) {

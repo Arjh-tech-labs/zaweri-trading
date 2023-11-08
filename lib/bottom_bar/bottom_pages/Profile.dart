@@ -71,7 +71,8 @@ class _ProfileState extends State<Profile> {
                   Stack(
                     children: [
                       ClipOval(
-                        child: CachedNetworkImage(
+                        child:
+                        CachedNetworkImage(
                           imageUrl:
                               "$ImageUrl${profileController.fetchData['image']}",
                           height: height / 14,

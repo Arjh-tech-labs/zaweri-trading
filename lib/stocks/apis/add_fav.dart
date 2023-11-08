@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart'as http;
@@ -25,12 +27,18 @@ Future<void> AddFav(
     "market_type": "$marketType"
   });
   request.headers.addAll(headers);
-
   http.StreamedResponse response = await request.send();
 
+  String responseBody = await response.stream.bytesToString();
+  final jsonResponse = json.decode(responseBody);
   if (response.statusCode == 200) {
     stockSearchController.fetchFilteredStocks(filter: filterName);
     wishlistsController.favoriteApi();
+
+    Fluttertoast.showToast(
+      msg: jsonResponse['message'].toString(),
+      backgroundColor: Colors.black,
+    );
     print(await response.stream.bytesToString());
   } else {
     print(response.reasonPhrase);
